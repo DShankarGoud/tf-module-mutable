@@ -1,4 +1,5 @@
 resource "aws_iam_policy" "policy" {
+  count       = var.IAM_POLICY_CREATE ? 1 : 0
   name        = "${var.COMPONENT}-${var.ENV}-secret-manager-read-policy"
   path        = "/"
   description = "${var.COMPONENT}-${var.ENV}-secret-manager-read-policy"
@@ -33,6 +34,7 @@ resource "aws_iam_policy" "policy" {
 }
 
 resource "aws_iam_role" "ec2-role" {
+  count       = var.IAM_POLICY_CREATE ? 1 : 0
   name = "${var.COMPONENT}-${var.ENV}-ec2-role"
 
   assume_role_policy = jsonencode({
@@ -55,7 +57,7 @@ resource "aws_iam_role" "ec2-role" {
 }
 
 resource "aws_iam_role_policy_attachment" "attach-policy" {
-  role       = aws_iam_role.ec2-role.name
-  policy_arn = aws_iam_policy.policy.arn
+  role       = aws_iam_role.ec2-role.*.name[0]
+  policy_arn = aws_iam_policy.policy.*.arn[0]
 }
 

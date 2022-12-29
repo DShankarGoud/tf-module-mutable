@@ -10,3 +10,8 @@ variable "ONDEMAND_INSTANCE_COUNT" {}
 
 variable "WORKSTATION_IP" {}
 variable "PORT" {}
+
+variable "IAM_POLICY_CREATE" {
+  default = false
+}
+
