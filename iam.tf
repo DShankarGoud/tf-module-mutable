@@ -62,9 +62,4 @@ resource "aws_iam_role_policy_attachment" "attach-policy" {
   policy_arn  = aws_iam_policy.policy.*.arn[0]
 }
 
-resource "aws_iam_instance_profile" "instance-profile" {
-  count = var.IAM_POLICY_CREATE ? 1 : 0
-  name  = "${var.COMPONENT}-${var.ENV}-ec2-role"
-  role  = aws_iam_role.ec2-role.*.name[0]
-}
 
