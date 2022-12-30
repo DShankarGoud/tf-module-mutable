@@ -13,3 +13,10 @@ resource "aws_lb_target_group" "target-group" {
     port                = var.PORT
   }
 }
+
+resource "aws_lb_target_group_attachment" "instances-to-tg" {
+  count            = length(local.ALL_INSTANCE_IDS)
+  target_group_arn = aws_lb_target_group.target-group.arn
+  target_id        = element(local.ALL_INSTANCE_IDS, count.index)
+  port             = var.PORT
+}
